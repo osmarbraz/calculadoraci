@@ -16,7 +16,6 @@ public class CtrCalculadora extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         try ( PrintWriter out = response.getWriter()) {
-            out.println("<!DOCTYPE html><html lang=\"pt-br\" xml:lang=\"pt-br\">");
             out.println("<html><head><title>Calculadora</title></head><body>");
             out.println("<h1>Calculadora</h1>");
 
