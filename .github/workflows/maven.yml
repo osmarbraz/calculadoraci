@@ -77,8 +77,12 @@ jobs:
         cache: maven
     # Executa o empacotamento do projeto com o Maven. 
     # O parâmetro -DskipTests pula os testes pois já foram executados no ambiente anterior.
-    - name: Empacota o projeto com Maven      
-      run: mvn -B package --file pom.xml -DskipTests
+    - name: Empacota o projeto com Maven, cria a imagem docker e envia imagem para dockerhub.
+      env:
+        DOCKERHUB_USERNAME: ${{secrets.DOCKERHUB_USERNAME}}
+        DOCKERHUB_TOKEN: ${{secrets.DOCKERHUB_TOKEN}}
+      run: mvn -B package --file pom.xml jib:build -DskipTests     
+    # Cria o artefato de download    
     # Cria o artefato de download    
     - name: Crie uma pasta temporária de downloads de artefatos
       run: mkdir staging

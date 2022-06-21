@@ -115,6 +115,34 @@
                 </executions>
             </plugin>
             
+             <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.2.1</version>
+                <configuration>
+                    <from>                        
+                        <image>tomcat:8.5-jre8-alpine</image>
+                    </from>
+                    <to>                        
+                        <image>osmarbraz/${project.artifactId}:${project.version}</image>
+                        <auth>
+                            <username>
+                                ${env.DOCKERHUB_USERNAME}
+                            </username>
+                            <password>
+                                ${env.DOCKERHUB_TOKEN}
+                            </password>
+                        </auth>
+                    </to>
+                    <container>
+                        <appRoot>/usr/local/tomcat/webapps/ROOT</appRoot>                      
+                        <ports>
+                            <port>8080</port>
+                        </ports>  
+                        <format>OCI</format>                      
+                    </container>
+                </configuration>
+            </plugin>              
         </plugins>
     </build>
 
