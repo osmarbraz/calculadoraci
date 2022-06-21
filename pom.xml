@@ -14,6 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <sonar.organization>osmarbraz</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.coverage.exclusions>**/*CtrCalculadora..*</sonar.coverage.exclusions> 
     </properties>
     
     <dependencies>
@@ -82,10 +83,36 @@
                     </execution>
                 </executions>
             </plugin>
-                       
+            
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M6</version>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.8</version>    
+                <configuration>                    
+                    <excludes>                        
+                        <exclude>**/*CtrCalculadora.*</exclude>                        
+                    </excludes>
+                </configuration>               
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             
         </plugins>
