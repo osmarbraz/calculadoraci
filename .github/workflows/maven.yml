@@ -41,6 +41,27 @@ jobs:
         cache: maven
     - name: Testa o projeto com Maven
       run: mvn -B test --file pom.xml
+    # Executa os passos da análise do código com o sonarcube     
+    - name: Cache dos pacotes do SonarCloud
+      uses: actions/cache@v1
+      with:
+        path: ~/.sonar/cache
+        key: ${{ runner.os }}-sonar
+        restore-keys: ${{ runner.os }}-sonar
+    - name: Cache dos pacotes do Maven
+      uses: actions/cache@v1
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
+    - name: Verifica o projeto com Maven e Jacoco
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar 
+                            -Dsonar.projectKey=osmarbraz_calculadoraci
+
+      
 
 # Jobs do ambiente de produção
   build-prd:
