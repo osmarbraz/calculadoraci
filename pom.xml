@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <sonar.organization>osmarbraz</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <sonar.coverage.exclusions>**/*CtrCalculadora..*</sonar.coverage.exclusions> 
+        <sonar.coverage.exclusions>**/*CtrCalculadora.*</sonar.coverage.exclusions> 
     </properties>
     
     <dependencies>
