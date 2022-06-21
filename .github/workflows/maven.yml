@@ -1,26 +1,74 @@
-# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
-# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
-
-name: Java CI with Maven
-
+name: Integração continua de Java com Maven
 on:
   push:
-    branches: [ "master" ]
+    branches: [ master ]
   pull_request:
-    branches: [ "master" ]
-
+    branches: [ master ]
 jobs:
-  build:
-
+  # Jobs do ambiente de desenvolvimento
+  build-dev:
     runs-on: ubuntu-latest
-
+    environment: 
+      name: dev
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up JDK 11
+    - name: Realiza o checkout do repositório
+      uses: actions/checkout@v3
+    - name: Configura o JDK 18
       uses: actions/setup-java@v3
       with:
-        java-version: '11'
+        java-version: '18'
         distribution: 'temurin'
         cache: maven
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
+    - name: Compila o projeto com Maven
+      run: mvn -B compile --file pom.xml
+  
+  # Jobs do ambiente de homologação
+  build-hmg:
+    runs-on: ubuntu-latest
+    environment: 
+      name: hmg
+    needs: build-dev
+    steps:
+    - name: Realiza o checkout do repositório
+      uses: actions/checkout@v3 
+      with:
+        fetch-depth: 0 
+    - name: Configura o JDK 18
+      uses: actions/setup-java@v3      
+      with:
+        java-version: '18'
+        distribution: 'temurin'
+        cache: maven
+    - name: Testa o projeto com Maven
+      run: mvn -B test --file pom.xml
+
+# Jobs do ambiente de produção
+  build-prd:
+    runs-on: ubuntu-latest
+    environment: 
+      name: prd
+    needs: build-hmg
+    steps:
+    - name: Realiza o checkout do repositório
+      uses: actions/checkout@v3
+    - name: Configura o JDK 18
+      uses: actions/setup-java@v3
+      with:
+        java-version: '18'
+        distribution: 'temurin'
+        cache: maven
+    # Executa o empacotamento do projeto com o Maven. 
+    # O parâmetro -DskipTests pula os testes pois já foram executados no ambiente anterior.
+    - name: Empacota o projeto com Maven      
+      run: mvn -B package --file pom.xml -DskipTests
+    # Cria o artefato de download    
+    - name: Crie uma pasta temporária de downloads de artefatos
+      run: mkdir staging
+    - name: Copia os artefatos a serem publicados na pasta temporária
+      run: cp target/*.war staging
+    - name: Usa Upload Artifact do GitHub Action
+      uses: actions/upload-artifact@v2
+      with:
+        name: Package
+        path: staging
+
