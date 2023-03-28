@@ -43,13 +43,13 @@ jobs:
       run: mvn -B test --file pom.xml
     # Executa os passos da análise do código com o sonarcube     
     - name: Cache dos pacotes do SonarCloud
-      uses: actions/cache@v1
+      uses: actions/cache@v3
       with:
         path: ~/.sonar/cache
         key: ${{ runner.os }}-sonar
         restore-keys: ${{ runner.os }}-sonar
     - name: Cache dos pacotes do Maven
-      uses: actions/cache@v1
+      uses: actions/cache@v3
       with:
         path: ~/.m2
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
@@ -89,7 +89,7 @@ jobs:
     - name: Copia os artefatos a serem publicados na pasta temporária
       run: cp target/*.war staging
     - name: Usa Upload Artifact do GitHub Action
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: Package
         path: staging
