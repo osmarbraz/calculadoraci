@@ -4,6 +4,7 @@
 [![Docker](https://img.shields.io/badge/Docker-image-brightgreen)](https://hub.docker.com/r/osmarbraz/calculadoraci)
 
 # Calculadora com CI.
+
 Utiliza 3 ambientes:
 - dev - Desenvolvimento
 - hmg - Homologação
@@ -19,3 +20,11 @@ Pipeline
 - A pasta test contêm os testes unitários do projeto utilizando JUnit 5.<br>
 - A cobertura do código é realizada através do JaCoCo.<br>
 - Virtualizado com Docker.
+
+## Arquivo do projeto
+
+O arquivo Modelo.EAP é o projeto do sistema utilizando ferramanta CASE Enterprise Arquitect.
+
+## Outros arquivos
+
+- pom.xml - Arquivo de configuração da ferramenta de automação Maven.
