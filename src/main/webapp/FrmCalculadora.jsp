@@ -11,7 +11,7 @@
                 <select name="operacao" id="operacao">
                     <option value="adicao">Adição</option>
                     <option value="subtracao">Subtração</option>
-                    <option value="produto">Produto</option>
+                    <option value="multiplicacao">Multiplicação</option>
                     <option value="divisao">Divisão</option>
                 </select><p>
                 Valor B : <input type=text name="ValorB"> <p>		

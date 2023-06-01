@@ -30,11 +30,11 @@ public class Calculadora {
         this.valorB = valorB;
     }
 
-    public double getAdicao() {
+    public double getSoma() {
         return (getValorA() + getValorB());
     }
 
-    public double getSubtracao() {
+    public double getDiferenca() {
         return (getValorA() - getValorB());
     }
 
@@ -42,7 +42,7 @@ public class Calculadora {
         return (getValorA() * getValorB());
     }
 
-    public double getDivisao() {
+    public double getQuociente() {
         return (getValorA() / getValorB());
     }
 }
