@@ -1,9 +1,9 @@
 name: Integração continua de Java com Maven
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 jobs:
   # Jobs do ambiente de desenvolvimento
   build-dev:
